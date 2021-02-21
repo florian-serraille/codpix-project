@@ -14,6 +14,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>codpix-application</module>
 		<module>codpix-domain</module>
 	</modules>
 </project>
