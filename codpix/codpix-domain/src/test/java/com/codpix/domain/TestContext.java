@@ -7,5 +7,5 @@ public class TestContext {
 	
 	public BankRegistrationRequest bankRegistrationRequest;
 	public Bank bank;
-	
+	public Exception error;
 }

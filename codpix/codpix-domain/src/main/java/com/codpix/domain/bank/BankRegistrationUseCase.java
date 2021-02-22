@@ -1,5 +1,6 @@
 package com.codpix.domain.bank;
 
+import com.codpix.domain.error.BankAlreadyRegisteredException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -10,8 +11,15 @@ class BankRegistrationUseCase implements BankRegistration {
 	public Bank register(final BankRegistrationRequest bankRegistrationRequest) {
 		
 		final Bank bank = new Bank(bankRegistrationRequest);
+		checkIfBankAlreadyExist(bankRegistrationRequest);
 		bankRepository.register(bank);
 		
 		return bank;
+	}
+	
+	private void checkIfBankAlreadyExist(final BankRegistrationRequest bankRegistrationRequest) {
+		if (bankRepository.exist(bankRegistrationRequest.getInstitutionCode())) {
+			throw new BankAlreadyRegisteredException(bankRegistrationRequest);
+		}
 	}
 }

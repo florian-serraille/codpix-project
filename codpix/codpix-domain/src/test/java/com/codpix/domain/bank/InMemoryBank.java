@@ -1,8 +1,5 @@
 package com.codpix.domain.bank;
 
-import com.codpix.domain.bank.Bank;
-import com.codpix.domain.bank.BankRepository;
-
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,5 +15,10 @@ public class InMemoryBank implements BankRepository {
 	@Override
 	public void register(final Bank bank) {
 		repository.put(bank.getCode(), bank);
+	}
+	
+	@Override
+	public boolean exist(final String institutionCode) {
+		return repository.values().stream().anyMatch(bank -> bank.getInstitutionCode().equals(institutionCode));
 	}
 }

@@ -1,6 +1,8 @@
 package com.codpix.domain.bank;
 
-interface BankRepository {
-
+public interface BankRepository {
+	
 	void register(Bank bank);
+	
+	boolean exist(String institutionCode);
 }

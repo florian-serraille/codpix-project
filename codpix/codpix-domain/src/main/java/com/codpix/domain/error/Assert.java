@@ -32,7 +32,6 @@ public final class Assert {
 			if (fieldValue.isBlank()) {
 				throw MissingMandatoryValueException.forBlankValue(fieldName);
 			}
-			
 			return this;
 		}
 		

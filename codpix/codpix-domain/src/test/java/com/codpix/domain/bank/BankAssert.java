@@ -4,15 +4,19 @@ import org.assertj.core.api.AbstractAssert;
 
 import static java.util.Objects.nonNull;
 
-public class BankAssert extends AbstractAssert<BankAssert, Bank> {
+class BankAssert extends AbstractAssert<BankAssert, Bank> {
 	
-	public BankAssert(final Bank bank) {
+	BankAssert(final Bank bank) {
 		super(bank, BankAssert.class);
 	}
 	
-	public BankAssert hasValidCode() {
+	BankAssert hasValidCode() {
 		
 		matches(bank -> nonNull(bank.getCode()), "Bank should have a non null id");
 		return this;
+	}
+	
+	void alreadyRegistrationError() {
+	
 	}
 }
