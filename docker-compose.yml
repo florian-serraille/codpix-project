@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+
+  codpix-bank-db:
+    image: 'postgres:13.1-alpine'
+    container_name: codpix-db
+    environment:
+      - POSTGRES_USER=codpix-db-user
+      - POSTGRES_PASSWORD=codpix-db-password
+      - POSTGRES_DB=codpix
+    ports:
+    - 5432:5432
