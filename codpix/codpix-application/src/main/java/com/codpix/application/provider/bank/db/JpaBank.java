@@ -1,4 +1,4 @@
-package com.codpix.application.provider.bank;
+package com.codpix.application.provider.bank.db;
 
 import com.codpix.domain.bank.Bank;
 import lombok.NoArgsConstructor;

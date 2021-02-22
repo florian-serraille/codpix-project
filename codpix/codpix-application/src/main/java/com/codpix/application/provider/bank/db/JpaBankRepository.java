@@ -1,4 +1,4 @@
-package com.codpix.application.provider.bank;
+package com.codpix.application.provider.bank.db;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
