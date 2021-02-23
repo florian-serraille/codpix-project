@@ -24,11 +24,11 @@ public class RestBank {
 	@Schema(description = "Code assign by codpix", example = "4694-ddsa675-ds846-das1684")
 	private final String code;
 	@NotEmpty
-	@Size(max = 3)
+	@Size(min = 3, max = 3)
 	@Schema(description = "Institution code own by the bank", example = "001")
 	private final String institutionCode;
 	@NotEmpty
-	@Size(max = 50)
+	@Size(min = 2, max = 50)
 	@Schema(description = "Bank name", example = "Banco do Brasil")
 	private final String name;
 	

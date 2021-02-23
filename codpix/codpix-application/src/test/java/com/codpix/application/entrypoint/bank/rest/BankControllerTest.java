@@ -3,6 +3,7 @@ package com.codpix.application.entrypoint.bank.rest;
 import com.codpix.domain.bank.Bank;
 import com.codpix.domain.bank.BankRegistration;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ class BankControllerTest {
 	private BankRegistration bankRegistration;
 	
 	@Test
+	@DisplayName("A valid registration bank request should return 201 with location header and provide bank code")
 	void shouldReturn201CodeForBankRequest() throws Exception {
 		
 		var restBank = new RestBank(null, "001", "BB");
@@ -47,4 +49,19 @@ class BankControllerTest {
 		            .andExpect(jsonPath("@.name", is(restBank.getName())));
 	}
 	
+	@Test
+	@DisplayName("An invalid registration bank request should return 400")
+	void shouldReturn400CodeForBankInvalidRequestCodeError() throws Exception {
+		
+		var restBank = new RestBank("123", "001", "BB");
+		final var registrationRequest = restBank.toBankRegistrationRequest();
+		
+		Mockito.when(bankRegistration.register(registrationRequest))
+		       .thenReturn(new Bank(registrationRequest));
+		
+		this.mockMvc.perform(post("/api/v1/bank").contentType(MediaType.APPLICATION_JSON)
+		                                         .content(new ObjectMapper().writeValueAsString(restBank)))
+		            .andDo(print())
+		            .andExpect(status().isBadRequest());
+	}
 }
