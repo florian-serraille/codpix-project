@@ -1,6 +1,6 @@
 package com.codpix.domain.bank;
 
-interface BankRegistration {
+public interface BankRegistration {
 	
 	Bank register(BankRegistrationRequest bankRegistrationRequest);
 }

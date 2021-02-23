@@ -4,7 +4,7 @@ import com.codpix.domain.error.BankAlreadyRegisteredException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-class BankRegistrationUseCase implements BankRegistration {
+public class BankRegistrationUseCase implements BankRegistration {
 	
 	private final BankRepository bankRepository;
 	
