@@ -19,7 +19,7 @@ public class BankRegistrationUseCase implements BankRegistration {
 	
 	private void checkIfBankAlreadyExist(final BankRegistrationRequest bankRegistrationRequest) {
 		if (bankRepository.exist(bankRegistrationRequest.getInstitutionCode())) {
-			throw new BankAlreadyRegisteredException(bankRegistrationRequest);
+			throw BankAlreadyRegisteredException.forRequest(bankRegistrationRequest);
 		}
 	}
 }

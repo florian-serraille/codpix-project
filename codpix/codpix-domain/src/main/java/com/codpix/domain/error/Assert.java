@@ -41,7 +41,7 @@ public final class Assert {
 				return this;
 			}
 			
-			throw StringBadSizeException.forNotEqual(fieldName, length, fieldValue.length());
+			throw StringBadSizeException.notEqual(fieldName, length, fieldValue.length());
 		}
 		
 		public StringAsserter maxlength(final int length) {
@@ -50,7 +50,7 @@ public final class Assert {
 				return this;
 			}
 			
-			throw StringBadSizeException.forTooLong(fieldName, length, fieldValue.length());
+			throw StringBadSizeException.tooLong(fieldName, length, fieldValue.length());
 		}
 	}
 }

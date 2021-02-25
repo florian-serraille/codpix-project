@@ -4,24 +4,34 @@ import static java.lang.String.format;
 
 public class StringBadSizeException extends CodPixException {
 	
-	protected StringBadSizeException(final String message) {
-		super(message);
+	private StringBadSizeException(final CodPixExceptionBuilder builder) {
+		super(builder);
 	}
 	
-	static StringBadSizeException forNotEqual(final String fieldName, final int expectedLength,
-	                                          final int actualLength) {
+	static StringBadSizeException notEqual(final String field, final int expectedLength,
+	                                       final int actualLength) {
 		
 		final String message = format("Length of %s field must be %d but was actually %d",
-		                              fieldName, expectedLength, actualLength);
+		                              field, expectedLength, actualLength);
 		
-		return new StringBadSizeException(message);
+		return new StringBadSizeException(CodPixException.builder(StandardMessage.STRING_LENGTH_NOT_EQUAL)
+		                                                 .argument("field", field)
+		                                                 .argument("actualLength", actualLength)
+		                                                 .argument("expectedLength", expectedLength)
+		                                                 .message(message)
+		                                                 .status(ErrorStatus.INTERNAL_SERVER_ERROR));
 	}
 	
-	static StringBadSizeException forTooLong(final String fieldName, final int expectedLength, final int actualLength) {
+	static StringBadSizeException tooLong(final String field, final int currentLength, final int maxLength) {
 		
 		final String message = format("Length of %s field must not exceed %d but was actually %d",
-		                              fieldName, expectedLength, actualLength);
+		                              field, maxLength, currentLength);
 		
-		return new StringBadSizeException(message);
+		return new StringBadSizeException(CodPixException.builder(StandardMessage.STRING_LENGTH_TOO_LONG)
+		                                                 .argument("field", field)
+		                                                 .argument("currentLength", currentLength)
+		                                                 .argument("maxLength", maxLength)
+		                                                 .message(message)
+		                                                 .status(ErrorStatus.INTERNAL_SERVER_ERROR));
 	}
 }
