@@ -1,14 +1,14 @@
 Feature: Bank registration
   As a bank,
   In order to send and receive pix,
-  I want to register in codpix
+  I want to register in CodPix
 
-  Scenario: A new bank request for registration in codpix
+  Scenario: A new bank request for registration in CodPix
     Given The valid bank BB
     When Bank BB ask for registration
     Then Bank receive code
 
-  Scenario: An already existing bank request for registration in codpix
+  Scenario: An already existing bank request for registration in CodPix
 
     Given The valid bank BB is already registered
     When Bank BB ask for registration
