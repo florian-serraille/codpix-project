@@ -28,38 +28,48 @@ class BankControllerTest {
 	private BankRegistration bankRegistration;
 	
 	@Test
-	@DisplayName("A valid registration bank request should return 201 with location header and provide bank code")
-	void shouldReturn201CodeForBankRequest() throws Exception {
+	void aValidRegistrationBankRequestShouldReturn201WithLocationHeaderAndProvideBankCode() throws Exception {
 		
-		var restBank = new RestBank(null, "001", "BB");
+		// Given
+		final var uri = "/api/v1/bank/";
+		final var restBank = new RestBank(null, "001", "BB");
 		final var registrationRequest = restBank.toBankRegistrationRequest();
 		
+		// When Then
 		Mockito.when(bankRegistration.register(registrationRequest))
 		       .thenReturn(new Bank(registrationRequest));
 		
-		this.mockMvc.perform(post("/api/v1/bank").contentType(MediaType.APPLICATION_JSON)
-		                                  .content(new ObjectMapper().writeValueAsString(restBank)))
+		this.mockMvc.perform(post(uri).contentType(MediaType.APPLICATION_JSON)
+		                                         .content(new ObjectMapper().writeValueAsString(restBank)))
 		            .andDo(print())
 		            .andExpect(status().isCreated())
-		            .andExpect(header().string(LOCATION, startsWith("/api/v1/bank/")))
-		            .andExpect(jsonPath("@.code", notNullValue()))
-		            .andExpect(jsonPath("@.institutionCode", is(restBank.getInstitutionCode())))
-		            .andExpect(jsonPath("@.name", is(restBank.getName())));
+		            .andExpect(header().string(LOCATION, startsWith(uri)))
+		            .andExpect(jsonPath("$.code", notNullValue()))
+		            .andExpect(jsonPath("$.institutionCode", is(restBank.getInstitutionCode())))
+		            .andExpect(jsonPath("$.name", is(restBank.getName())));
 	}
 	
 	@Test
-	@DisplayName("An invalid registration bank request should return 400")
-	void shouldReturn400CodeForBankInvalidRequestCodeError() throws Exception {
+	void anInvalidRegistrationBankRequestShouldReturn400() throws Exception {
 		
-		var restBank = new RestBank("123", "001", "BB");
+		// Given
+		final var uri = "/api/v1/bank";
+		final var restBank = new RestBank("123", "001", "BB");
 		final var registrationRequest = restBank.toBankRegistrationRequest();
 		
-		Mockito.when(bankRegistration.register(registrationRequest))
-		       .thenReturn(new Bank(registrationRequest));
-		
-		this.mockMvc.perform(post("/api/v1/bank").contentType(MediaType.APPLICATION_JSON)
-		                                         .content(new ObjectMapper().writeValueAsString(restBank)))
+		// When Then
+		this.mockMvc.perform(post(uri).contentType(MediaType.APPLICATION_JSON)
+		                              .content(new ObjectMapper().writeValueAsString(restBank)))
 		            .andDo(print())
-		            .andExpect(status().isBadRequest());
+		            .andExpect(status().isBadRequest())
+		            .andExpect(jsonPath("@.codeDescription", is("Bad Request")))
+		            .andExpect(jsonPath("@.errorType", is("user.bad-request")))
+		            .andExpect(jsonPath("@.message", is("Provided values are incorrects.")))
+		            .andExpect(jsonPath("@.path", is(uri)))
+		            .andExpect(jsonPath("@.timestamp", notNullValue()))
+		            .andExpect(jsonPath("@.fieldsErrors", hasSize(1)))
+		            .andExpect(jsonPath("@.fieldsErrors[0].fieldPath", is("code")));
+		
+		Mockito.verifyNoInteractions(bankRegistration);
 	}
 }
