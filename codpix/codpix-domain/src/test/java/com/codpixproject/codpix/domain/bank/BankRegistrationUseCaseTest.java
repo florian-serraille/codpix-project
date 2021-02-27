@@ -1,6 +1,5 @@
 package com.codpixproject.codpix.domain.bank;
 
-import com.codpixproject.codpix.domain.error.CodPixException;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,16 +38,12 @@ public class BankRegistrationUseCaseTest {
 	public void shouldNotRegisterBankForInvalidBankRequest() {
 		
 		// Given
-		final var invalidInstitutionCode = "01";
 		final var request = new BankRegistrationRequest("01", "Banco do Brasil");
 		
 		// When
-		final var throwable = Assertions.catchThrowable(() -> bankRegistration.register(request));
+		Assertions.catchThrowable(() -> bankRegistration.register(request));
 		
 		//Then
-		Assertions.assertThat(throwable)
-		          .isNotNull()
-		          .isInstanceOf(CodPixException.class);
 		Mockito.verifyZeroInteractions(bankRepository);
 	}
 }

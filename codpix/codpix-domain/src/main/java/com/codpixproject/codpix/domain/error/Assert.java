@@ -52,5 +52,14 @@ public final class Assert {
 			
 			throw StringBadSizeException.tooLong(fieldName, length, fieldValue.length());
 		}
+		
+		public StringAsserter minLength(final int length) {
+			
+			if (isNull(fieldValue) || fieldValue.length() >= length) {
+				return this;
+			}
+			
+			throw StringBadSizeException.tooShort(fieldName, length, fieldValue.length());
+		}
 	}
 }

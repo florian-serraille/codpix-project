@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ErrorMessagesTest {
+class ErrorMessagesTest {
 	
 	private static final Set<Class<? extends CodPixMessage>> errors = getSubTypesOf();
 	
@@ -37,7 +37,7 @@ public class ErrorMessagesTest {
 	}
 	
 	@Test
-	public void shouldHaveOnlyEnumImplementations() {
+	void shouldHaveOnlyEnumImplementations() {
 		
 		errors.forEach(error -> assertThat(error.isEnum() || error.isInterface())
 				                        .as("Implementations of " + CodPixMessage.class.getName() +
@@ -47,7 +47,7 @@ public class ErrorMessagesTest {
 	}
 	
 	@Test
-	public void shouldHaveMessagesForAllKeys() {
+	void shouldHaveMessagesForAllKeys() {
 		
 		final var messages = loadMessages();
 		

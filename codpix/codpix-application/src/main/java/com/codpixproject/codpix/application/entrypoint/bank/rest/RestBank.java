@@ -13,6 +13,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
+import static com.codpixproject.codpix.application.entrypoint.error.ApplicationMessage.ValidationMessage.*;
 import static com.fasterxml.jackson.annotation.JsonCreator.Mode.PROPERTIES;
 
 @Getter
@@ -21,15 +22,17 @@ import static com.fasterxml.jackson.annotation.JsonCreator.Mode.PROPERTIES;
 @Schema(name = "bank", description = "bank participant")
 public class RestBank {
 	
-	@Null
+	@Null(message = MUST_BE_NULL)
 	@Schema(description = "Code assign by codpix", example = "4694-ddsa675-ds846-das1684")
 	private final String code;
-	@NotEmpty
-	@Size(min = 3, max = 3)
+	
+	@NotEmpty(message = MUST_BE_NOT_NULL)
+	@Size(min = 3, max = 3, message = BAD_LENGTH)
 	@Schema(description = "Institution code own by the bank", example = "001")
 	private final String institutionCode;
-	@NotEmpty
-	@Size(min = 2, max = 50)
+	
+	@NotEmpty(message = MUST_BE_NOT_NULL)
+	@Size(min = 2, max = 50, message = BAD_LENGTH)
 	@Schema(description = "Bank name", example = "Banco do Brasil")
 	private final String name;
 	

@@ -12,6 +12,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.Pattern;
 
+import static com.codpixproject.codpix.application.entrypoint.error.ApplicationMessage.*;
+import static com.codpixproject.codpix.application.entrypoint.error.ApplicationMessage.ValidationMessage.*;
+
 /**
  * Resource to expose errors endpoints
  */
@@ -60,7 +63,7 @@ class ErrorResource {
 	
 	@GetMapping("/{complicated}")
 	public void complicatedArg(
-			@Validated @Pattern(message = ValidationMessage.WRONG_FORMAT, regexp = "complicated")
+			@Validated @Pattern(message = WRONG_FORMAT, regexp = "complicated")
 			@PathVariable("complicated") String complicated
 	) {
 		logger.info("Congratulations you got it right!");

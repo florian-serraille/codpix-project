@@ -19,7 +19,7 @@ public class Bank {
 		this.institutionCode = bankInstitutionCode;
 		
 		final String bankName = bankRegistrationRequest.getName();
-		Assert.field("name", bankName).notBlank().maxlength(50);
+		Assert.field("name", bankName).notBlank().minLength(2).maxlength(50);
 		this.name = bankName;
 		
 		this.code = UUID.randomUUID();

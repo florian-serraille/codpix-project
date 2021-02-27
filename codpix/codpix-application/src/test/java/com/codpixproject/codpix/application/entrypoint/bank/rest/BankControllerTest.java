@@ -68,7 +68,9 @@ class BankControllerTest {
 		            .andExpect(jsonPath("@.path", is(uri)))
 		            .andExpect(jsonPath("@.timestamp", notNullValue()))
 		            .andExpect(jsonPath("@.fieldsErrors", hasSize(1)))
-		            .andExpect(jsonPath("@.fieldsErrors[0].fieldPath", is("code")));
+		            .andExpect(jsonPath("@.fieldsErrors[0].fieldPath", is("code")))
+		            .andExpect(jsonPath("@.fieldsErrors[0].reason", is("user.must-be-null")))
+		            .andExpect(jsonPath("@.fieldsErrors[0].message", is("The field must be null.")));
 		
 		Mockito.verifyNoInteractions(bankRegistration);
 	}

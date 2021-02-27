@@ -34,4 +34,17 @@ public class StringBadSizeException extends CodPixException {
 		                                                 .message(message)
 		                                                 .status(ErrorStatus.INTERNAL_SERVER_ERROR));
 	}
+	
+	static StringBadSizeException tooShort(final String field, final int currentLength, final int minLength) {
+		
+		final String message = format("Length of %s field must exceed %d but was actually %d",
+		                              field, minLength, currentLength);
+		
+		return new StringBadSizeException(CodPixException.builder(StandardMessage.STRING_LENGTH_TOO_LONG)
+		                                                 .argument("field", field)
+		                                                 .argument("currentLength", currentLength)
+		                                                 .argument("minLength", minLength)
+		                                                 .message(message)
+		                                                 .status(ErrorStatus.INTERNAL_SERVER_ERROR));
+	}
 }

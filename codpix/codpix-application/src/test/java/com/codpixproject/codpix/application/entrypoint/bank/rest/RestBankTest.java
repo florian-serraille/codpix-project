@@ -2,6 +2,7 @@ package com.codpixproject.codpix.application.entrypoint.bank.rest;
 
 import com.codpixproject.codpix.application.EqualityTest;
 import com.codpixproject.codpix.application.entrypoint.TestJson;
+import com.codpixproject.codpix.application.entrypoint.error.ApplicationMessage;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
@@ -40,7 +42,10 @@ class RestBankTest implements EqualityTest<RestBank> {
 		final var violations = validator.validate(restBank);
 		
 		// Then
-		Assertions.assertThat(violations).hasSize(1);
+		Assertions.assertThat(violations)
+		          .extracting(ConstraintViolation::getMessage)
+		          .allMatch(ApplicationMessage::isAValidKey);
+		Assertions.assertThat(violations.size()).isGreaterThanOrEqualTo(1);
 	}
 	
 	@ParameterizedTest(name = "for value {0}")
@@ -55,6 +60,9 @@ class RestBankTest implements EqualityTest<RestBank> {
 		final var violations = validator.validate(restBank);
 		
 		// Then
+		Assertions.assertThat(violations)
+		          .extracting(ConstraintViolation::getMessage)
+		          .allMatch(ApplicationMessage::isAValidKey);
 		Assertions.assertThat(violations.size()).isGreaterThanOrEqualTo(1);
 	}
 	
@@ -70,6 +78,12 @@ class RestBankTest implements EqualityTest<RestBank> {
 		final var violations = validator.validate(restBank);
 		
 		// Then
+		Assertions.assertThat(violations)
+		          .extracting(ConstraintViolation::getMessage)
+		          .withFailMessage("Verify that all bean validation annotation in RestBank " +
+		                           "has proper valid message key matching with ApplicationMessage")
+		          .allMatch(ApplicationMessage::isAValidKey);
+		
 		Assertions.assertThat(violations.size()).isGreaterThanOrEqualTo(1);
 	}
 	

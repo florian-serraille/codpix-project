@@ -13,7 +13,7 @@ public class CodPixExceptionAssert extends AbstractAssert<CodPixExceptionAssert,
 		
 		Assertions.assertThat(throwable)
 		          .isNotNull()
-		          .isExactlyInstanceOf(CodPixExceptionAssert.class);
+		          .isInstanceOf(CodPixException.class);
 		return new CodPixExceptionAssert((CodPixException) throwable);
 	}
 	
