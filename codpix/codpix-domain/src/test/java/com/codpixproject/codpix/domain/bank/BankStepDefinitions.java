@@ -1,11 +1,11 @@
 package com.codpixproject.codpix.domain.bank;
 
 import com.codpixproject.codpix.domain.TestContext;
-import com.codpixproject.codpix.domain.error.BankAlreadyRegisteredException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.assertj.core.api.Assertions;
+
+import static com.codpixproject.codpix.domain.error.CodPixExceptionAssert.BankAlreadyRegisteredExceptionAssert.assertThat;
 
 public class BankStepDefinitions {
 	
@@ -17,7 +17,6 @@ public class BankStepDefinitions {
 		this.bankRegistration = new BankRegistrationUseCase(new InMemoryBank());
 	}
 	
-	
 	@Given("The valid bank BB")
 	public void theValidBankBb() {
 		testContext.bankRegistrationRequest = new BankRegistrationRequest("001", "Banco do Brasil");
@@ -28,7 +27,7 @@ public class BankStepDefinitions {
 		
 		try {
 			testContext.bank = bankRegistration.register(testContext.bankRegistrationRequest);
-		} catch (Exception exception){
+		} catch (Exception exception) {
 			testContext.error = exception;
 		}
 	}
@@ -48,9 +47,6 @@ public class BankStepDefinitions {
 	@Then("Bank receive an error for for being already registered")
 	public void bankReceiveAnErrorForForBeingAlreadyRegistered() {
 		
-		Assertions.assertThat(testContext.error)
-		          .isNotNull()
-		          .isExactlyInstanceOf(BankAlreadyRegisteredException.class)
-		          .hasMessageContaining(testContext.bankRegistrationRequest.getInstitutionCode());
+		assertThat(testContext.error).isValid(testContext.bankRegistrationRequest.getInstitutionCode());
 	}
 }

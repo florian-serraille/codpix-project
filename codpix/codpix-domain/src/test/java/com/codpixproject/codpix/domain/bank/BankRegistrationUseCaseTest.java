@@ -36,28 +36,11 @@ public class BankRegistrationUseCaseTest {
 	}
 	
 	@Test
-	public void shouldNotRegisterBankForInvalidInstitutionCodeBankRequest() {
+	public void shouldNotRegisterBankForInvalidBankRequest() {
 		
 		// Given
 		final var invalidInstitutionCode = "01";
 		final var request = new BankRegistrationRequest("01", "Banco do Brasil");
-		
-		// When
-		final var throwable = Assertions.catchThrowable(() -> bankRegistration.register(request));
-		
-		//Then
-		Assertions.assertThat(throwable)
-		          .isNotNull()
-		          .isInstanceOf(CodPixException.class);
-		Mockito.verifyZeroInteractions(bankRepository);
-	}
-	
-	@Test
-	public void shouldNotRegisterBankForInvalidBankNameRequest() {
-		
-		// Given
-		final var invalidName = "";
-		final var request = new BankRegistrationRequest("001", invalidName);
 		
 		// When
 		final var throwable = Assertions.catchThrowable(() -> bankRegistration.register(request));

@@ -15,8 +15,4 @@ class BankAssert extends AbstractAssert<BankAssert, Bank> {
 		matches(bank -> nonNull(bank.getCode()), "Bank should have a non null id");
 		return this;
 	}
-	
-	void alreadyRegistrationError() {
-	
-	}
 }
