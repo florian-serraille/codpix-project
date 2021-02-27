@@ -8,7 +8,7 @@ public class BankAlreadyRegisteredException extends CodPixException {
 		
 		super(CodPixException.builder(StandardMessage.BANK_ALREADY_REGISTERED)
 		                     .argument("institutionCode", institutionCode)
-		                     .status(ErrorStatus.INTERNAL_SERVER_ERROR)
+		                     .status(ErrorStatus.BAD_REQUEST)
 		                     .message(message));
 	}
 	
