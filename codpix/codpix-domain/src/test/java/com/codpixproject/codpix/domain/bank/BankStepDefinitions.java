@@ -1,6 +1,7 @@
 package com.codpixproject.codpix.domain.bank;
 
 import com.codpixproject.codpix.domain.TestContext;
+import com.codpixproject.codpix.domain.error.ErrorStatus;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -47,6 +48,7 @@ public class BankStepDefinitions {
 	@Then("Bank receive an error for for being already registered")
 	public void bankReceiveAnErrorForForBeingAlreadyRegistered() {
 		
-		assertThat(testContext.error).isValid(testContext.bankRegistrationRequest.getInstitutionCode());
+		assertThat(testContext.error).hasStatus(ErrorStatus.CONFLICT)
+		                             .hasArgument("institutionCode", testContext.bankRegistrationRequest.getInstitutionCode());
 	}
 }
